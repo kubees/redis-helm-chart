@@ -1,2 +1,3 @@
 .idea
 redis-helm-chart/charts
+redis-helm-chart/templates/redis-secret.yaml

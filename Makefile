@@ -1,9 +1,8 @@
-install:
-	helm dependency update ./redis-helm-chart
-	helm install playlist ./redis-helm-chart -f redis-helm-chart/values.yaml -n databases --create-namespace
+install: dependencies
+	helm install redis ./redis-helm-chart -f redis-helm-chart/values.yaml -n databases --create-namespace
 uninstall:
-	helm uninstall playlist -n databases
+	helm uninstall redis -n databases
 template:
-	helm template playlist ./redis-helm-chart
+	helm template redis ./redis-helm-chart
 dependencies:
 	helm dependency update ./redis-helm-chart
