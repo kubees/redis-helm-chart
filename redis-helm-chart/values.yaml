@@ -16,9 +16,10 @@ redis:
     persistence:
       storageClass: "redis-sc"
       size: 10Gi
-  auth:
-    existingSecret: redis-secret
-    existingSecretPasswordKey: password
+    auth:
+     enabled: true
+     existingSecret: redis-secret
+     existingSecretPasswordKey: password
   networkPolicy:
     # Should be enabled later on
     enabled: false
