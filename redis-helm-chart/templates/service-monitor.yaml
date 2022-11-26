@@ -1,0 +1,21 @@
+{{- if .Values.redis.metrics.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    serviceMonitorSelector: redis-service-monitor
+  name: redis-service-monitor
+  namespace: {{ .Values.redis.namespace }}
+spec:
+  endpoints:
+    - interval: {{ .Values.redis.metrics.interval }}
+      targetPort: {{ .Values.redis.metrics.targetPort }}
+      path: {{ .Values.redis.metrics.path }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Values.redis.namespace }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: metrics
+      app.kubernetes.io/name: redis
+{{- end }}
