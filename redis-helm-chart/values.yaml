@@ -2,6 +2,10 @@ redis:
   namespace: databases
   replica:
     replicaCount: 0
+  auth:
+    enabled: true
+    existingSecret: redis-secret
+    existingSecretPasswordKey: password
   master:
     replicaCount: 1
     containerPorts:
@@ -16,10 +20,7 @@ redis:
     persistence:
       storageClass: "redis-sc"
       size: 10Gi
-    auth:
-     enabled: true
-     existingSecret: redis-secret
-     existingSecretPasswordKey: password
+
   networkPolicy:
     # Should be enabled later on
     enabled: false
@@ -28,3 +29,6 @@ redis:
     create: false
   metrics:
     enabled: true
+    interval: 20s
+    targetPort: metrics
+    path: /metrics
