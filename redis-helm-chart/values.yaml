@@ -20,6 +20,16 @@ redis:
     persistence:
       storageClass: "redis-sc"
       size: 10Gi
+      existingClaim: redis-pvc
+      enabled: true
+    volumeNodeAffinity:
+      required:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                  - minikube
 
   networkPolicy:
     # Should be enabled later on

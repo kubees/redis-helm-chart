@@ -1,0 +1,14 @@
+kind: "PersistentVolumeClaim"
+apiVersion: "v1"
+metadata:
+  name: {{ .Values.redis.master.persistence.existingClaim }}
+  annotations:
+    volume.beta.kubernetes.io/storage-class: {{ .Values.redis.master.persistence.storageClass | quote }}
+spec:
+  {{- range .Values.redis.master.persistence.accessModes }}
+  accessModes:
+    - {{ . }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.redis.master.persistence.size }}
