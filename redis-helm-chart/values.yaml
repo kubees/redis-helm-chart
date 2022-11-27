@@ -30,6 +30,7 @@ redis:
                 operator: In
                 values:
                   - minikube
+                  - kind-control-plane
 
   networkPolicy:
     # Should be enabled later on
