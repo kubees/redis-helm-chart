@@ -1,0 +1,24 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: redis-data
+  labels:
+    type: local
+spec:
+  storageClassName: {{ .Values.redis.master.persistence.storageClass | quote }}
+  capacity:
+    storage: {{ .Values.redis.master.persistence.size }}
+  local:
+    path: /kubernetes-persistent-volume/redis
+  persistentVolumeReclaimPolicy: Retain
+  {{- range .Values.redis.master.persistence.accessModes }}
+  accessModes:
+    - {{ . }}
+  {{- end }}
+  claimRef:
+    namespace: {{ .Release.Namespace }}
+    name: {{ .Values.redis.master.persistence.existingClaim }}
+  {{- with .Values.redis.master.volumeNodeAffinity }}
+  nodeAffinity:
+    {{- toYaml . | nindent 4}}
+  {{- end }}
