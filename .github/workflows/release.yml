@@ -1,0 +1,22 @@
+name: "Helm Release"
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  chart-release:
+    name: Chart Release
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Helm package
+        run: helm package redis-helm-chart --dependency-update
+      - name: Helm release
+        run: |
+          curl --request POST \
+          --form 'chart=@redis-helm-chart-0.1.0.tgz' \
+          --user ${{ secrets.GITLAB_USERNAME }}:${{ secrets.GITLAB_TOKEN }} \
+          https://gitlab.com/api/v4/projects/42388747/packages/helm/api/stable/charts
