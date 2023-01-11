@@ -1,3 +1,5 @@
+global:
+  env: prod
 redis:
   namespace: databases
   replica:
