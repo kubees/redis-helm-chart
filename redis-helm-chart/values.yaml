@@ -26,11 +26,10 @@ redis:
       required:
         nodeSelectorTerms:
           - matchExpressions:
-              - key: kubernetes.io/hostname
+              - key: beta.kubernetes.io/os
                 operator: In
                 values:
-                  - minikube
-                  - kind-control-plane
+                  - linux
 
   networkPolicy:
     # Should be enabled later on
